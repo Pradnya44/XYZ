@@ -1,0 +1,31 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+import os
+csv_data = pd.read_csv("format1.csv")
+excel_data = pd.read_excel("format2.xlsx")
+json_data = pd.read_json("format3.json")
+csv_data.head()
+excel_data.head()
+json_data.head()
+def merge(dataframes):
+    if dataframes:
+        return pd.concat(dataframes)
+df = merge([csv_data, excel_data, json_data])
+df.head()
+df.Date = pd.to_datetime(df.Date)
+df.Time = pd.to_datetime(df.Time)
+df.head()
+df.isna().sum()
+df.duplicated().sum()
+df.boxplot()
+sns.pairplot(df)
+plt.show()
+plt.figure(figsize=(12, 6 ))
+plt.bar(df['Product line'],df['Total'], color='skyblue')
+plt.xlabel('Product Category')
+plt.title('Total Sales Amount')
+plt.title('Total Sales by Product Category')
+plt.xticks(rotation=20)
+plt.show()
